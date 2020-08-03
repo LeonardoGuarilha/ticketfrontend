@@ -1,6 +1,17 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div`
+  /* height: 100vh; 
+  display: flex;
+  align-items: stretch; */
+
+  /* max-width: 480px;
+  width: 100%;
+  background-color: #edf4ff; 
+  padding: 30px;
+  border-radius: 5px; */
+
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -9,16 +20,21 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  place-content: center;
+
   width: 100%;
-  background-color: #232129;
-  padding: 30px;
-  border-radius: 5px;
+  max-width: 480px;
+
+  /* background-color: #232129; */
 `;
 
 export const HeaderTitle = styled.h1`
   margin-top: 0;
-  color: black;
+  color: #edf4ff;
 `;
 
 export const HeaderTip = styled.p`
@@ -34,4 +50,33 @@ export const FromContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    margin: 80px 0; /** 80px em cima e em baixo */
+    width: 340px;
+    text-align: center;
+
+    h1 {
+      margin-bottom: 24px;
+    }
+
+    a {
+      color: #f4ede8;
+      display: block;
+      margin-top: 24px;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: ${shade(0.2, '#f4ede8')};
+      }
+    }
+  }
 `;

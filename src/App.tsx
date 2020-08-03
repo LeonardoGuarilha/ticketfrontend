@@ -1,11 +1,14 @@
 import React from 'react';
 import GlobalStyle from './styles/global';
-import SignIn from './pages/SignIn';
+import Routes from './routes';
+import { BrowserRouter } from 'react-router-dom';
 
 const App: React.FC = () => (
   <>
-    <SignIn />
-    <GlobalStyle />
+    <BrowserRouter>
+      <Routes />
+      <GlobalStyle />
+    </BrowserRouter>
   </>
 );
 

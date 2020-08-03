@@ -1,6 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  isFocused: boolean;
+  isFilled: boolean;
+  isErrored: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   background: #232129;
   border-radius: 10px;
   padding: 16px;
@@ -11,4 +17,44 @@ export const Container = styled.div`
 
   display: flex;
   align-items: center;
+
+  /** Toda div que seja precedida de outra div */
+  & + div {
+    margin-top: 8px;
+  }
+
+  /** acesso as proprs do meu componente e quando a propriedade isErrored for true eu faço alguma coisa*/
+  ${(props) =>
+    props.isErrored &&
+    css`
+      border-color: #c53030;
+    `}
+
+  ${(props) =>
+    props.isFocused &&
+    css`
+      color: #ff9000;
+      border-color: #ff9000;
+    `}
+
+  ${(props) =>
+    props.isFilled &&
+    css`
+      color: #ff9000;
+    `}
+
+  input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    color: #f4ede8;
+
+    &::placeholder {
+      color: #666360;
+    }
+  }
+
+  svg {
+    margin-right: 16px;
+  }
 `;
