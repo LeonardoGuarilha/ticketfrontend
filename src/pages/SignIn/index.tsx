@@ -35,7 +35,7 @@ const SignIn: React.FC = () => {
       <Content>
         <MainContent>
           <Form onSubmit={handleSubmit}>
-            <HeaderTitle>Faça seu Login</HeaderTitle>
+            <HeaderTitle>Bem vindo ao Ticket!</HeaderTitle>
 
             <Input name="email" icon={FiMail} placeholder="Email" />
             <Input
