@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { shade } from 'polished';
 
 export const Container = styled.div``;
 
@@ -63,48 +62,36 @@ export const Main = styled.main`
   padding: 32px 0;
   max-width: 740px;
   margin: 0 auto;
+
+  a {
+    background: #ff9000;
+    height: 56px;
+    border-radius: 10px;
+    border: 0;
+    padding: 0 16px;
+    color: #312e38;
+    width: 200px;
+    margin-right: 15px;
+    font-weight: 500;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
 `;
 
-export const Content = styled.article`
-  background: #28262e;
-  /* border: 1px solid #e6e6f0; */
-  /* border-radius: 50%; */
-  margin-top: 24px;
-  overflow: hidden;
-  margin: 32px auto;
-  width: 90%;
-`;
+export const TextArea = styled.textarea`
+  background: #232129;
+  border-radius: 10px;
+  padding: 16px;
+  width: 100%;
 
-export const ContentHeader = styled.header`
-  padding: 32px 20px;
+  border: 2px solid #232129;
+  color: #fff;
+
   display: flex;
   align-items: center;
-
-  img {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-  }
-
-  div {
-    margin-left: 24px;
-
-    strong {
-      font-weight: bold;
-      font-size: 24px;
-      color: #999591;
-      display: block;
-    }
-
-    span {
-      font-size: 16px;
-      display: block;
-    }
-  }
-`;
-
-export const Mensagem = styled.p`
-  padding: 0 32px;
 `;
 
 export const Footer = styled.footer`
@@ -130,17 +117,5 @@ export const Footer = styled.footer`
     align-items: center;
     justify-content: center;
     text-decoration: none;
-
-    & + a {
-      background: #312e38;
-      border: 1;
-      color: #ff9000;
-      width: 200px;
-      margin-right: 10px;
-    }
-
-    &:hover {
-      background: ${shade(0.2, '#ff9000')};
-    }
   }
 `;
