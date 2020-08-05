@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  FormEvent,
+  useRef,
+} from 'react';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 
 import {
   Container,
@@ -7,7 +13,6 @@ import {
   HeaderContent,
   Profile,
   Main,
-  TextArea,
   Footer,
 } from './styles';
 import { FiPower } from 'react-icons/fi';
@@ -15,25 +20,37 @@ import { Form } from '@unform/web';
 import Input from '../../components/Input';
 import api from '../../services/api';
 import Button from '../../components/Button';
+import Textarea from '../../components/TextArea';
+import { FormHandles } from '@unform/core';
 
 interface EditParams {
   id: string;
 }
 
 interface Ticket {
-  assunto: string;
   mensagem: string;
 }
 
 const EditTicket: React.FC = () => {
   const { params } = useRouteMatch<EditParams>();
-  const [ticket, setTicket] = useState<Ticket>();
+  const history = useHistory();
+  const formRef = useRef<FormHandles>(null);
+  const [ticket, setTicket] = useState<Ticket>({} as Ticket);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     api.get(`tickets/${params.id}`).then((response) => {
       setTicket(response.data);
       console.log(response.data);
     });
+  }, []);
+
+  const handleAnswerTicket = useCallback((data: Ticket) => {
+    api.put(`tickets/${params.id}`, { mensagem: data.mensagem });
+
+    console.log(data.mensagem);
+
+    history.push('/dashboard');
   }, []);
 
   return (
@@ -61,17 +78,11 @@ const EditTicket: React.FC = () => {
       </Header>
 
       <Main>
-        <Form onSubmit={() => {}}>
-          {ticket && (
-            <TextArea cols={80} rows={20}>
-              {ticket.mensagem}
-            </TextArea>
-          )}
+        <Form ref={formRef} onSubmit={handleAnswerTicket}>
+          <span>Resposta</span>
+          <Textarea name="mensagem" />
 
-          <Footer>
-            {/* <Link to="/dashboard">Encerrar</Link> */}
-            <Button>Responder</Button>
-          </Footer>
+          <Button type="submit">Entrar</Button>
         </Form>
       </Main>
     </Container>

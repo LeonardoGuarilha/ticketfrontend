@@ -37,13 +37,13 @@ const Dashboard: React.FC = () => {
     api.get('tickets/didnotanswer').then((response) => {
       setTickets(response.data);
     });
-  }, []);
+  }, [tickets]);
 
   useEffect(() => {
     api.get('tickets').then((response) => {
       setTicketsClientes(response.data);
     });
-  }, []);
+  }, [ticketsClientes]);
 
   return (
     <Container>

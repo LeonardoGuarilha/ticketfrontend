@@ -79,19 +79,10 @@ export const Main = styled.main`
     justify-content: center;
     text-decoration: none;
   }
-`;
 
-export const TextArea = styled.textarea`
-  background: #232129;
-  border-radius: 10px;
-  padding: 16px;
-  width: 100%;
-
-  border: 2px solid #232129;
-  color: #fff;
-
-  display: flex;
-  align-items: center;
+  span {
+    font-size: 20px;
+  }
 `;
 
 export const Footer = styled.footer`
