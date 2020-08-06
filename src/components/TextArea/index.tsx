@@ -6,18 +6,19 @@ import React, {
   useCallback,
 } from 'react';
 import { IconBaseProps } from 'react-icons';
-import { FiAlertCircle } from 'react-icons/fi';
 import { useField } from '@unform/core';
 import { Container } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   name: string;
+  placeholder: string;
   containerStyle?: object;
   icon?: React.ComponentType<IconBaseProps>;
 }
 
 const Input: React.FC<InputProps> = ({
   name,
+  placeholder,
   containerStyle = {},
   icon: Icon,
   ...rest
@@ -48,7 +49,13 @@ const Input: React.FC<InputProps> = ({
   return (
     <Container style={containerStyle}>
       {Icon && <Icon size={20} />}
-      <textarea cols={80} rows={20} ref={inputRef} {...rest} />
+      <textarea
+        placeholder={placeholder}
+        cols={80}
+        rows={20}
+        ref={inputRef}
+        {...rest}
+      />
     </Container>
   );
 };

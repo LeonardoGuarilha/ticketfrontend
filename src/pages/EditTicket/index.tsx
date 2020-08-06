@@ -1,23 +1,9 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  FormEvent,
-  useRef,
-} from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 
-import {
-  Container,
-  Header,
-  HeaderContent,
-  Profile,
-  Main,
-  Footer,
-} from './styles';
+import { Container, Header, HeaderContent, Profile, Main } from './styles';
 import { FiPower } from 'react-icons/fi';
 import { Form } from '@unform/web';
-import Input from '../../components/Input';
 import api from '../../services/api';
 import Button from '../../components/Button';
 import Textarea from '../../components/TextArea';
@@ -36,14 +22,13 @@ const EditTicket: React.FC = () => {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
   const [ticket, setTicket] = useState<Ticket>({} as Ticket);
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     api.get(`tickets/${params.id}`).then((response) => {
       setTicket(response.data);
       console.log(response.data);
     });
-  }, []);
+  }, [params.id]);
 
   const handleAnswerTicket = useCallback((data: Ticket) => {
     api.put(`tickets/${params.id}`, { mensagem: data.mensagem });
@@ -80,7 +65,7 @@ const EditTicket: React.FC = () => {
       <Main>
         <Form ref={formRef} onSubmit={handleAnswerTicket}>
           <span>Resposta</span>
-          <Textarea name="mensagem" />
+          <Textarea name="mensagem" placeholder="Resposta do ticket..." />
 
           <Button type="submit">Entrar</Button>
         </Form>

@@ -21,6 +21,16 @@ export const HeaderContent = styled.div`
     background: transparent;
     border: 0;
   }
+
+  a {
+    text-decoration: none;
+    color: #ff9000;
+    margin-left: auto;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 `;
 
 export const Profile = styled.div`
@@ -57,9 +67,6 @@ export const Profile = styled.div`
 `;
 
 export const Main = styled.main`
-  /* margin: 3.2rem auto;
-  width: 90%; */
-
   padding: 32px 0;
   max-width: 740px;
   margin: 0 auto;
@@ -115,7 +122,8 @@ export const Footer = styled.footer`
   align-items: center;
   justify-content: flex-end;
 
-  a {
+  a,
+  button {
     background: #ff9000;
     height: 56px;
     border-radius: 10px;

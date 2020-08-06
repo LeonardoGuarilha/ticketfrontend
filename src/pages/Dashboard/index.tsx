@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import {
   Container,
@@ -12,8 +12,6 @@ import {
   Footer,
 } from './styles';
 import { Link } from 'react-router-dom';
-import { FiPower } from 'react-icons/fi';
-import Button from '../../components/Button';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 
@@ -26,6 +24,7 @@ interface Tickets {
   status: string;
   respondido: boolean;
   userId: number;
+  encerrado: boolean;
 }
 
 const Dashboard: React.FC = () => {
@@ -45,6 +44,10 @@ const Dashboard: React.FC = () => {
     });
   }, [ticketsClientes]);
 
+  const encerraTicket = useCallback(async (id: number) => {
+    await api.put(`tickets/encerra/${id}`);
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -63,9 +66,7 @@ const Dashboard: React.FC = () => {
             </div>
           </Profile>
 
-          <button type="button" onClick={() => {}}>
-            <FiPower />
-          </button>
+          <Link to="/createTicket">Criar ticket</Link>
         </HeaderContent>
       </Header>
 
@@ -99,27 +100,35 @@ const Dashboard: React.FC = () => {
 
         {ticketsClientes.map((ticket) => (
           <>
-            {ticket.userId === Number(user.id) && user.is_agent === false && (
-              <Content>
-                <ContentHeader>
-                  <img
-                    src="https://avatars2.githubusercontent.com/u/39388688?s=460&u=3476f0244eb92639f1e5fa7c0f14f0086bd272d8&v=4"
-                    alt="Leonardo Guarilha"
-                  />
-                  <div>
-                    <strong>{ticket.criador}</strong>
-                    <span>{ticket.assunto}</span>
-                  </div>
-                </ContentHeader>
+            {ticket.userId === Number(user.id) &&
+              user.is_agent === false &&
+              ticket.encerrado === false && (
+                <Content>
+                  <ContentHeader>
+                    <img
+                      src="https://avatars2.githubusercontent.com/u/39388688?s=460&u=3476f0244eb92639f1e5fa7c0f14f0086bd272d8&v=4"
+                      alt="Leonardo Guarilha"
+                    />
+                    <div>
+                      <strong>{ticket.criador}</strong>
+                      <span>{ticket.assunto}</span>
+                    </div>
+                  </ContentHeader>
 
-                <Mensagem>{ticket.mensagem}</Mensagem>
+                  <Mensagem>{ticket.mensagem}</Mensagem>
 
-                <Footer>
-                  <Link to="/">Encerrar</Link>
-                  <Link to={`/ticket/${ticket.id}`}>Responder</Link>
-                </Footer>
-              </Content>
-            )}
+                  <Footer>
+                    {/* <Link to="/">Encerrar</Link> */}
+                    <button
+                      type="submit"
+                      onClick={() => encerraTicket(ticket.id)}
+                    >
+                      Encerrar
+                    </button>
+                    <Link to={`/ticket/${ticket.id}`}>Responder</Link>
+                  </Footer>
+                </Content>
+              )}
           </>
         ))}
       </Main>

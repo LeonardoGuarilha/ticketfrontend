@@ -23,37 +23,40 @@ const SignIn: React.FC = () => {
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSubmit = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrogatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail obrogatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      await signIn({
-        email: data.email,
-        password: data.password,
-      });
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
 
-      history.push('/dashboard');
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const erros = getValidationErros(err);
-        console.log(err);
-        formRef.current?.setErrors(erros);
+        history.push('/dashboard');
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const erros = getValidationErros(err);
+          console.log(err);
+          formRef.current?.setErrors(erros);
 
-        return;
+          return;
+        }
       }
-    }
-  }, []);
+    },
+    [history, signIn]
+  );
 
   return (
     <Container>
