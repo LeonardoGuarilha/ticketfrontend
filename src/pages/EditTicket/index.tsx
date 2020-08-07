@@ -67,7 +67,7 @@ const EditTicket: React.FC = () => {
           <span>Resposta</span>
           <Textarea name="mensagem" placeholder="Resposta do ticket..." />
 
-          <Button type="submit">Entrar</Button>
+          <Button type="submit">Responder</Button>
         </Form>
       </Main>
     </Container>

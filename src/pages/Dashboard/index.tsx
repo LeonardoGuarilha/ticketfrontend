@@ -10,6 +10,7 @@ import {
   Mensagem,
   Content,
   Footer,
+  ContainerLink,
 } from './styles';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
@@ -94,7 +95,9 @@ const Dashboard: React.FC = () => {
 
                 {user.is_agent && (
                   <Footer>
-                    <Link to={`/ticket/${ticket.id}`}>Responder</Link>
+                    <ContainerLink>
+                      <Link to={`/ticket/${ticket.id}`}>Responder</Link>
+                    </ContainerLink>
                   </Footer>
                 )}
               </Content>
@@ -122,14 +125,15 @@ const Dashboard: React.FC = () => {
                   <Mensagem>{ticket.mensagem}</Mensagem>
 
                   <Footer>
-                    {/* <Link to="/">Encerrar</Link> */}
                     <button
                       type="submit"
                       onClick={() => encerraTicket(ticket.id)}
                     >
                       Encerrar
                     </button>
-                    <Link to={`/ticket/${ticket.id}`}>Responder</Link>
+                    <ContainerLink>
+                      <Link to={`/ticket/${ticket.id}`}>Responder</Link>
+                    </ContainerLink>
                   </Footer>
                 </Content>
               )}
