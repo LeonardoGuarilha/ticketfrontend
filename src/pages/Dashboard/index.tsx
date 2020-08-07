@@ -66,7 +66,11 @@ const Dashboard: React.FC = () => {
             </div>
           </Profile>
 
-          <Link to="/createTicket">Criar ticket</Link>
+          {user.is_agent ? (
+            <Link to="/createTag">Criar Tag</Link>
+          ) : (
+            <Link to="/createTicket">Criar ticket</Link>
+          )}
         </HeaderContent>
       </Header>
 

@@ -1,4 +1,10 @@
-import React, { useRef, useCallback } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useEffect,
+  useState,
+  ChangeEvent,
+} from 'react';
 
 import { Container, Header, HeaderContent, Profile, Main } from './styles';
 import { Link, useHistory } from 'react-router-dom';
@@ -10,6 +16,7 @@ import Textarea from '../../components/TextArea';
 import Button from '../../components/Button';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
+import Select from '../../components/Select';
 
 interface TicketData {
   assunto: string;
@@ -17,17 +24,38 @@ interface TicketData {
   tag: string;
 }
 
+interface TagData {
+  id: number;
+  nome: string;
+}
+
 const CreateTicket: React.FC = () => {
   const navigation = useHistory();
   const { user } = useAuth();
 
+  const [tag, setTag] = useState<string[]>([]);
+  const [selectedTag, setSelectedTag] = useState('0');
+
+  useEffect(() => {
+    api.get<TagData[]>('tag').then((response) => {
+      const tags = response.data.map((tag) => tag.nome);
+      setTag(tags);
+    });
+  }, []);
+
+  function handleSelectTag(event: ChangeEvent<HTMLSelectElement>) {
+    const tag = event.target.value;
+
+    setSelectedTag(tag);
+  }
+
   const handleSubmit = useCallback(
     async (data: TicketData) => {
+      // console.log(data);
+      // console.log(selectedTag);
       const { assunto, mensagem, tag } = data;
 
       try {
-        await api.post('tag', { nome: tag });
-
         await api.post('tickets', {
           assunto,
           criador: user.name,
@@ -35,7 +63,7 @@ const CreateTicket: React.FC = () => {
           usuarioAtual: user.id,
           status: 'ABERTO',
           respondido: false,
-          nometag: tag,
+          nometag: selectedTag,
           userId: user.id,
         });
         navigation.push('/dashboard');
@@ -43,7 +71,7 @@ const CreateTicket: React.FC = () => {
         alert('Ocorreu um erro ao criar o ticket');
       }
     },
-    [navigation, user.id, user.name]
+    [navigation, user.id, user.name, selectedTag]
   );
 
   const formRef = useRef<FormHandles>(null);
@@ -74,7 +102,19 @@ const CreateTicket: React.FC = () => {
       <Main>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="assunto" placeholder="Assunto" />
-          <Input name="tag" placeholder="Tag" />
+          <select
+            name="tag"
+            id="tag"
+            value={selectedTag}
+            onChange={handleSelectTag}
+          >
+            <option value="0">Selecione uma tag</option>
+            {tag.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
           <Textarea name="mensagem" placeholder="Mensagem" />
           <Button type="submit">Criar ticket</Button>
         </Form>

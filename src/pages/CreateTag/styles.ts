@@ -59,23 +59,4 @@ export const Main = styled.main`
   padding: 32px 0;
   max-width: 600px;
   margin: 0 auto;
-
-  select {
-    background: transparent;
-    flex: 1;
-    border: 0;
-    color: #f4ede8;
-    background: #232129;
-    border-radius: 10px;
-    padding: 16px;
-    width: 100%;
-
-    border: 2px solid #232129;
-    color: #666360;
-
-    display: flex;
-    align-items: center;
-
-    margin-top: 10px;
-  }
 `;
