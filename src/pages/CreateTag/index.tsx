@@ -6,10 +6,9 @@ import { FiPower } from 'react-icons/fi';
 import Input from '../../components/Input';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import Textarea from '../../components/TextArea';
 import Button from '../../components/Button';
-import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
 
 interface TagData {
   nome: string;
@@ -34,6 +33,7 @@ const CreateTag: React.FC = () => {
   );
 
   const formRef = useRef<FormHandles>(null);
+
   return (
     <Container>
       <Header>
@@ -47,7 +47,7 @@ const CreateTag: React.FC = () => {
             <div>
               <span>Bem-vindo,</span>
               <Link to="/profile">
-                <strong>Leonardo</strong>
+                <strong>{user.nome}</strong>
               </Link>
             </div>
           </Profile>

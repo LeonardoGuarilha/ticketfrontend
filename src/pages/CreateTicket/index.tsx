@@ -16,12 +16,10 @@ import Textarea from '../../components/TextArea';
 import Button from '../../components/Button';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
-import Select from '../../components/Select';
 
 interface TicketData {
   assunto: string;
   mensagem: string;
-  tag: string;
 }
 
 interface TagData {
@@ -30,11 +28,12 @@ interface TagData {
 }
 
 const CreateTicket: React.FC = () => {
-  const navigation = useHistory();
   const { user } = useAuth();
+  const navigation = useHistory();
 
   const [tag, setTag] = useState<string[]>([]);
   const [selectedTag, setSelectedTag] = useState('0');
+  const [tagId, setTagId] = useState(0);
 
   useEffect(() => {
     api.get<TagData[]>('tag').then((response) => {
@@ -45,36 +44,38 @@ const CreateTicket: React.FC = () => {
 
   function handleSelectTag(event: ChangeEvent<HTMLSelectElement>) {
     const tag = event.target.value;
+    const tagId = event.target.selectedIndex;
 
+    setTagId(tagId);
     setSelectedTag(tag);
   }
 
   const handleSubmit = useCallback(
     async (data: TicketData) => {
-      // console.log(data);
-      // console.log(selectedTag);
-      const { assunto, mensagem, tag } = data;
+      const { assunto, mensagem } = data;
 
       try {
         await api.post('tickets', {
           assunto,
-          criador: user.name,
+          criador: user.nome,
           mensagem,
           usuarioAtual: user.id,
           status: 'ABERTO',
           respondido: false,
           nometag: selectedTag,
           userId: user.id,
+          tagId,
         });
         navigation.push('/dashboard');
       } catch (err) {
         alert('Ocorreu um erro ao criar o ticket');
       }
     },
-    [navigation, user.id, user.name, selectedTag]
+    [navigation, user.id, user.nome, selectedTag, tagId]
   );
 
   const formRef = useRef<FormHandles>(null);
+
   return (
     <Container>
       <Header>
@@ -88,7 +89,7 @@ const CreateTicket: React.FC = () => {
             <div>
               <span>Bem-vindo,</span>
               <Link to="/profile">
-                <strong>Leonardo</strong>
+                <strong>{user.nome}</strong>
               </Link>
             </div>
           </Profile>

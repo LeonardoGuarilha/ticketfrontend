@@ -16,7 +16,7 @@ interface InputProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<InputProps> = ({
+const Textarea: React.FC<InputProps> = ({
   name,
   placeholder,
   containerStyle = {},
@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const { fieldName, defaultValue, error, registerField } = useField(name);
+  const { fieldName, registerField } = useField(name);
 
   const handleTextAreaBlur = useCallback(() => {
     setIsFocused(false);
@@ -59,4 +59,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default Textarea;

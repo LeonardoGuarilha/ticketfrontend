@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 
 import { Container, Header, HeaderContent, Profile, Main } from './styles';
@@ -8,6 +8,7 @@ import api from '../../services/api';
 import Button from '../../components/Button';
 import Textarea from '../../components/TextArea';
 import { FormHandles } from '@unform/core';
+import { useAuth } from '../../hooks/auth';
 
 interface EditParams {
   id: string;
@@ -21,22 +22,16 @@ const EditTicket: React.FC = () => {
   const { params } = useRouteMatch<EditParams>();
   const history = useHistory();
   const formRef = useRef<FormHandles>(null);
-  const [ticket, setTicket] = useState<Ticket>({} as Ticket);
+  const { user } = useAuth();
 
-  useEffect(() => {
-    api.get(`tickets/${params.id}`).then((response) => {
-      setTicket(response.data);
-      console.log(response.data);
-    });
-  }, [params.id]);
+  const handleAnswerTicket = useCallback(
+    (data: Ticket) => {
+      api.put(`tickets/${params.id}`, { mensagem: data.mensagem });
 
-  const handleAnswerTicket = useCallback((data: Ticket) => {
-    api.put(`tickets/${params.id}`, { mensagem: data.mensagem });
-
-    console.log(data.mensagem);
-
-    history.push('/dashboard');
-  }, []);
+      history.push('/dashboard');
+    },
+    [history, params.id]
+  );
 
   return (
     <Container>
@@ -51,7 +46,7 @@ const EditTicket: React.FC = () => {
             <div>
               <span>Bem-vindo,</span>
               <Link to="/profile">
-                <strong>Leonardo</strong>
+                <strong>{user.nome}</strong>
               </Link>
             </div>
           </Profile>

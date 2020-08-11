@@ -2,13 +2,13 @@ import React from 'react';
 import GlobalStyle from './styles/global';
 import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
-import AppProvider from './hooks';
+import { AuthProvider } from './hooks/auth';
 
 const App: React.FC = () => (
   <BrowserRouter>
-    <AppProvider>
+    <AuthProvider>
       <Routes />
-    </AppProvider>
+    </AuthProvider>
 
     <GlobalStyle />
   </BrowserRouter>

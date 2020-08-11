@@ -13,22 +13,21 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   place-content: center;
-
   width: 100%;
   max-width: 480px;
 `;
 
 export const HeaderTitle = styled.h1`
   margin-top: 0;
+  margin-bottom: 10px;
   color: #edf4ff;
 `;
 
-const appearFromLeft = keyframes`
+const appearFromRight = keyframes`
   from {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translateX(50px);
   }
   to {
     opacity: 1;
@@ -42,7 +41,7 @@ export const MainContent = styled.div`
   align-items: center;
   justify-content: center;
 
-  animation: ${appearFromLeft} 1s;
+  animation: ${appearFromRight} 1s;
 
   form {
     margin: 80px 0;

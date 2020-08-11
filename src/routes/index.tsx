@@ -6,6 +6,7 @@ import Dashboard from '../pages/Dashboard';
 import EditTicket from '../pages/EditTicket';
 import CreateTicket from '../pages/CreateTicket';
 import CreateTag from '../pages/CreateTag';
+import ForgotPassword from '../pages/ForgotPassword';
 
 const Routes: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Routes: React.FC = () => {
       <Route path="/ticket/:id+" component={EditTicket} />
       <Route path="/createTicket" component={CreateTicket} />
       <Route path="/createTag" component={CreateTag} />
+      <Route path="/forgotPassword" component={ForgotPassword} />
     </Switch>
   );
 };

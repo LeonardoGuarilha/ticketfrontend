@@ -20,12 +20,12 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   align-items: center;
 
-  /** Toda div que seja precedida de outra div */
+  
   & + div {
     margin-top: 8px;
   }
 
-  /** acesso as proprs do meu componente e quando a propriedade isErrored for true eu faço alguma coisa*/
+  
   ${(props) =>
     props.isErrored &&
     css`

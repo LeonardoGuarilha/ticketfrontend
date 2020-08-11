@@ -16,12 +16,6 @@ export const HeaderContent = styled.div`
   align-items: center;
   max-width: 1100px;
 
-  button {
-    margin-left: auto;
-    background: transparent;
-    border: 0;
-  }
-
   a {
     text-decoration: none;
     color: #ff9000;
@@ -58,6 +52,7 @@ export const Profile = styled.div`
     a {
       text-decoration: none;
       color: #ff9000;
+      margin-left: 0;
 
       &:hover {
         opacity: 0.8;
@@ -74,8 +69,6 @@ export const Main = styled.main`
 
 export const Content = styled.article`
   background: #28262e;
-  /* border: 1px solid #e6e6f0; */
-  /* border-radius: 50%; */
   margin-top: 24px;
   overflow: hidden;
   margin: 32px auto;
